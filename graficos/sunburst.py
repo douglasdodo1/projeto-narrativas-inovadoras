@@ -1,6 +1,6 @@
-import json
+Ôªøimport json
 
-# Dados para o gr·fico Sunburst
+# Dados para o gr√°fico Sunburst
 data = {
     "labels": ["Total", "Categoria A", "Subcategoria A1", "Subcategoria A2", 
                "Categoria B", "Subcategoria B1", "Subcategoria B2"],
@@ -8,13 +8,13 @@ data = {
                 "Total", "Categoria B", "Categoria B"],
     "values": [100, 60, 30, 30, 40, 20, 20],
     "customdata": [
-        "DescriÁ„o do Total",
-        "DescriÁ„o da Categoria A",
-        "DescriÁ„o da Subcategoria A1",
-        "DescriÁ„o da Subcategoria A2",
-        "DescriÁ„o da Categoria B",
-        "DescriÁ„o da Subcategoria B1",
-        "DescriÁ„o da Subcategoria B2"
+        "Descri√ß√£o do Total",
+        "Descri√ß√£o da Categoria A",
+        "Descri√ß√£o da Subcategoria A1",
+        "Descri√ß√£o da Subcategoria A2",
+        "Descri√ß√£o da Categoria B",
+        "Descri√ß√£o da Subcategoria B1",
+        "Descri√ß√£o da Subcategoria B2"
     ]
 }
 
