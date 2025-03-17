@@ -1,7 +1,11 @@
 {
+  "version": 2,
   "functions": {
-    "api/**/*.py": {
+    "api/sunburst.py": {
       "runtime": "python3.9"
     }
-  }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.py" }
+  ]
 }
