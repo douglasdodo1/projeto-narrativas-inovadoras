@@ -1,5 +1,5 @@
 ﻿// Carregar dados do arquivo JSON
-fetch('assets/sunburst_data.json')
+fetch('public/sunburst_data.json')
     .then(response => response.json())
     .then(data => {
         // Criar o gráfico Sunburst composição alepe
