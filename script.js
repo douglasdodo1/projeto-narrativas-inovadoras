@@ -1,7 +1,7 @@
 ﻿fetch('/api/sunburst')
   .then(response => response.json())
   .then(data => {
-    //GRÁFICO SUNBURST para composição política
+    // Criação do gráfico Plotly
     const trace = {
       type: 'sunburst',
       labels: data.labels,
@@ -15,10 +15,9 @@
     const layout = {
       title: 'Composição da Bancada Evangélica da ALEPE',
       margin: { l: 0, r: 0, b: 0, t: 30 },
-      height: 600
+      height: 300
     };
 
     Plotly.newPlot('sunburst-graph', [trace], layout);
-    //GRÁFICO SUNBURST para composição política
   })
   .catch(error => console.error('Erro ao carregar dados:', error));
