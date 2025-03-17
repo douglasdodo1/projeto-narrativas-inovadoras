@@ -24,3 +24,30 @@
     Plotly.newPlot('sunburst-graph', [trace], layout);
   })
   .catch(error => console.error('Erro ao carregar dados:', error));
+
+  // Faz requisição para a API que retorna os dados dos deputados
+fetch('/api/cards')
+  .then(response => response.json()) // Converte resposta para JSON
+  .then(deputados => {
+    const container = document.getElementById("cards-container");
+
+    // Percorre a lista de deputados e cria os cartões dinamicamente
+    deputados.forEach(dep => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+
+      card.innerHTML = `
+        <img src="${dep.foto}" alt="${dep.nome}" class="card-img">
+        <div class="card-content">
+          <h3>${dep.nome}</h3>
+          <p><strong>Partido:</strong> ${dep.partido}</p>
+          <p>"${dep.citacao}"</p>
+          <p>"${dep.descricao}"</p>
+          <p><strong>Projetos:</strong> ${dep.projetos.join(", ")}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+  });
+})
+.catch(error => console.error('Erro ao carregar os cartões:', error));
