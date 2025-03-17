@@ -1,8 +1,6 @@
-﻿// Carregar dados do arquivo JSON
-fetch('public/sunburst_data.json')
+﻿fetch('/api/sunburst')
     .then(response => response.json())
     .then(data => {
-        // Criar o gráfico Sunburst composição alepe
         const trace = {
             type: 'sunburst',
             labels: data.labels,
@@ -18,7 +16,7 @@ fetch('public/sunburst_data.json')
             margin: { l: 0, r: 0, b: 0, t: 30 },
             height: 300
         };
-        // gráfico sunburst composição alepe
+
         Plotly.newPlot('sunburst-graph', [trace], layout);
     })
     .catch(error => console.error('Erro ao carregar dados:', error));
