@@ -1,64 +1,72 @@
-/* Estilo Geral */
+/* Fonte global e reset básico */
 body {
-    font-family: 'Quicksand', sans-serif; /* Fonte arredondada */
+    font-family: 'Quicksand', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9; /* Fundo claro para o corpo */
-    color: #333; /* Cor de texto padrão */
+    background-color: #e6ecf0; /* tom azul leve de fundo */
+    color: #333;
 }
 
 /* Cabeçalho */
 header {
-    background-color: #4567b2; /* Azul leve, mas não muito claro ou escuro */
-    color: white;
+    background-color: #2d3e50; /* azul escuro suave */
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para separar do corpo */
-}
-
-    header h1 {
-        margin: 0;
-        font-size: 2rem;
-    }
-
-/* Corpo Principal */
-main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar o conteúdo */
-}
-
-    main section {
-        margin-bottom: 20px;
-    }
-
-    main p {
-        line-height: 1.6;
-    }
-
-/* Gráfico Sunburst */
-#sunburst-graph {
-    width: 100%;
-    height: 400px;
-    margin: 20px 0;
 }
 
 /* Rodapé */
 footer {
-    background-color: #4567b2; /* Mesmo azul do cabeçalho */
-    color: white;
+    background-color: #2d3e50; /* mesma cor do header pra dar unidade */
+    color: #fff;
     text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Sombra para separar do corpo */
+    padding: 20px 10px;
+    margin-top: 40px;
 }
 
-    footer p {
-        margin: 0;
-        font-size: 0.9rem;
+/* Texto Inicial e Final */
+main section.texto-inicial,
+main section.texto-final {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Seção Gráfico + Texto lado a lado */
+.grafico-e-texto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+    .grafico-e-texto .texto {
+        flex: 1 1 400px;
     }
+
+    .grafico-e-texto .grafico {
+        flex: 1 1 500px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+#sunburst-graph {
+    width: 100%;
+    height: 400px;
+}
+
+/* Títulos */
+h1, h2 {
+    font-weight: 700;
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
