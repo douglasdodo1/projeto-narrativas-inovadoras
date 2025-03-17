@@ -1,18 +1,16 @@
 ﻿export default function handler(req, res) {
-  const data = {
-    labels: ["Total", "PL", "Subcategoria A1", "Subcategoria A2", "Categoria B", "Subcategoria B1", "Subcategoria B2"],
-    parents: ["", "Total", "Categoria A", "Categoria A", "Total", "Categoria B", "Categoria B"],
-    values: [100, 60, 30, 30, 40, 20, 20],
-    customdata: [
-      "Descrição do Total",
-      "Descrição da Categoria A",
-      "Descrição da Subcategoria A1",
-      "Descrição da Subcategoria A2",
-      "Descrição da Categoria B",
-      "Descrição da Subcategoria B1",
-      "Descrição da Subcategoria B2"
-    ]
-  };
+  //dados dos partidos
+  const partidos = [
+    { nome: "PL", deputados: 2, descricao: "Deputados Joel da Harpa, Renato Antunes" },
+    { nome: "Republicanos", deputados: 1, descricao: "Deputado William Brígido" },
+    { nome: "PP", deputados: 3, descricao: "Deputados Pastor Cleiton Collins, Pastor Júnior Tércio, Adalto Santos" },
+    { nome: "União Brasil", deputados: 1, descricao: "Deputado Romero Sales Filho" }
+  ];
 
-  res.status(200).json(data);
+  const labels = ["Total", ...partidos.map(p => p.nome)];
+  const parents = ["", ...Array(partidos.length).fill("Total")];
+  const values = [partidos.reduce((acc, p) => acc + p.deputados, 0), ...partidos.map(p => p.deputados)];
+  const customdata = ["Total de deputados", ...partidos.map(p => p.descricao)];
+  
+  res.status(200).json({ labels, parents, values, customdata });
 }
