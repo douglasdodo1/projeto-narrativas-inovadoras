@@ -15,7 +15,7 @@
     const layout = {
       title: 'Composição da Bancada Evangélica da ALEPE',
       margin: { l: 0, r: 0, b: 0, t: 30 },
-      height: 300
+      height: 600
     };
 
     Plotly.newPlot('sunburst-graph', [trace], layout);
