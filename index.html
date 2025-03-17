@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Editorial</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
-<body>
-    <!-- Cabeçalho -->
-    <header>
-        <h1>Meu Editorial Interativo</h1>
-    </header>
+fetch('/api/sunburst')
+  .then(response => response.json())
+  .then(data => {
+    // Criação do gráfico Plotly
+    const trace = {
+      type: 'sunburst',
+      labels: data.labels,
+      parents: data.parents,
+      values: data.values,
+      customdata: data.customdata,
+      hovertemplate: '<b>%{label}</b>
+<br>%{customdata}<extra></extra>',
+      branchvalues: 'total'
+    };
 
-    <!-- Corpo -->
-    <main>
-        <section>
-            <h2>Bem-vindo ao Meu Projeto Editorial</h2>
-            <p>Este é um espaço para experimentar gráficos interativos e outras funcionalidades.</p>
-        </section>
+    const layout = {
+      title: 'Composição da Bancada Evangélica da ALEPE',
+      margin: { l: 0, r: 0, b: 0, t: 30 },
+      height: 300
+    };
 
-        <!-- Seção do Gráfico Sunburst -->
-        <section>
-            <h2>Gráfico Sunburst</h2>
-            <div id="sunburst-graph"></div>
-        </section>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    Plotly.newPlot('sunburst-graph', [trace], layout);
+  })
+  .catch(error => console.error('Erro ao carregar dados:', error));

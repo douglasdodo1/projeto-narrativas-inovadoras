@@ -1,6 +1,6 @@
 ﻿export default function handler(req, res) {
   const data = {
-    labels: ["Total", "PL", "Republicanos", "Subcategoria A2", "Categoria B", "Subcategoria B1", "Subcategoria B2"],
+    labels: ["Total", "Categoria A", "Subcategoria A1", "Subcategoria A2", "Categoria B", "Subcategoria B1", "Subcategoria B2"],
     parents: ["", "Total", "Categoria A", "Categoria A", "Total", "Categoria B", "Categoria B"],
     values: [100, 60, 30, 30, 40, 20, 20],
     customdata: [
