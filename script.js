@@ -1,7 +1,7 @@
 ﻿fetch('/api/sunburst')
   .then(response => response.json())
   .then(data => {
-    // Criação do gráfico Plotly
+    //GRÁFICO SUNBURST para composição política
     const trace = {
       type: 'sunburst',
       labels: data.labels,
@@ -19,5 +19,6 @@
     };
 
     Plotly.newPlot('sunburst-graph', [trace], layout);
+    //GRÁFICO SUNBURST para composição política
   })
   .catch(error => console.error('Erro ao carregar dados:', error));
