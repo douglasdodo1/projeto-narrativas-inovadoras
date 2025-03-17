@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Editorial</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <!-- Cabeçalho -->
@@ -14,7 +15,16 @@
 
     <!-- Corpo -->
     <main>
-        <p>Bem-vindo ao meu projeto editorial! Este é um espaço para experimentar gráficos interativos e outras funcionalidades.</p>
+        <section>
+            <h2>Bem-vindo ao Meu Projeto Editorial</h2>
+            <p>Este é um espaço para experimentar gráficos interativos e outras funcionalidades.</p>
+        </section>
+
+        <!-- Seção do Gráfico Sunburst -->
+        <section>
+            <h2>Gráfico Sunburst</h2>
+            <div id="sunburst-graph"></div>
+        </section>
     </main>
 
     <script src="script.js"></script>
