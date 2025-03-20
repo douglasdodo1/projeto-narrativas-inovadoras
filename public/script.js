@@ -105,20 +105,11 @@ function flipCard(card) {
 
 //----------------------------------------------------------------------------------------------------
 
-    fetch('/api/votos')
+fetch('/api/votos')
       .then(response => response.json())
       .then(data => {
         const anos = data.anos;
         const partidos = data.partidos;
-
-        // Definir cores fixas para cada partido (melhor consistência visual)
-        const coresPartidos = {
-          "PP": "#00ff99", // Verde neon
-          "União (DEM/PSL)": "#ff0066", // Rosa neon
-          "PL": "#00bfff", // Azul claro
-          "Republicanos": "#ff6347", // Vermelho tomate
-          "Total": "#ffffff", // Branco para o total
-        };
 
         // Função para criar o gráfico com base no ano selecionado
         function criarGrafico(anoSelecionado) {
@@ -129,62 +120,43 @@ function flipCard(card) {
             indices = [anos.indexOf(anoSelecionado)]; // Índice do ano selecionado
           }
 
-          // Preparar os dados iniciais (colunas zeradas)
+          // Preparar os dados para o gráfico
           const traces = partidos.map(partido => ({
             x: indices.map(i => anos[i]),
-            y: indices.map(() => 0), // Valores iniciais zerados
-            type: 'bar',
+            y: indices.map(i => partido.votos[i]),
+            mode: 'lines+markers',
             name: partido.nome,
+            line: { width: 3 },
+            marker: { size: 8 },
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => partido.percentual[i].toFixed(2)),
-            marker: { color: coresPartidos[partido.nome] }, // Cor fixa para cada partido
           }));
 
-          // Adicionar barra de total
+          // Adicionar linha de total
           traces.push({
             x: indices.map(i => anos[i]),
-            y: indices.map(() => 0), // Valores iniciais zerados
-            type: 'bar',
+            y: indices.map(i => data.total[i]),
+            mode: 'lines+markers',
             name: 'Total',
+            line: { color: '#000', width: 2, dash: 'dash' },
+            marker: { size: 8 },
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => data.percentualTotal[i].toFixed(2)),
-            marker: { color: coresPartidos["Total"] }, // Cor fixa para o total
           });
 
           const layout = {
             title: anoSelecionado === "todos"
-              ? 'Distribuição de Votos por Partido (2014-2022)'
+              ? 'Crescimento da Votação por Partido (2014-2022)'
               : `Votação em ${anoSelecionado}`,
-            barmode: 'stack', // Barras empilhadas
-            xaxis: { title: 'Ano', tickfont: { color: '#ffffff' } },
-            yaxis: { title: 'Número de Votos', tickfont: { color: '#ffffff' } },
-            plot_bgcolor: '#1e1e1e', // Fundo do gráfico
-            paper_bgcolor: '#1e1e1e', // Fundo externo
-            font: { color: '#ffffff' }, // Cor do texto
+            xaxis: { title: 'Ano' },
+            yaxis: { title: 'Número de Votos' },
+            hovermode: 'closest',
             transition: { duration: 500 }, // Animação suave
+            plot_bgcolor: '#f9f9f9', // Cor de fundo do gráfico
+            paper_bgcolor: '#f9f9f9', // Cor de fundo da área externa
           };
 
-          // Criar o gráfico inicial com valores zerados
-          Plotly.newPlot('grafico', traces, layout, { displayModeBar: false });
-
-          // Animar o crescimento das colunas
-          setTimeout(() => {
-            const novosDados = partidos.map(partido => ({
-              y: indices.map(i => partido.votos[i]), // Valores reais
-            }));
-
-            // Adicionar os dados do total
-            novosDados.push({
-              y: indices.map(i => data.total[i]), // Valores reais do total
-            });
-
-            // Animar o gráfico
-            Plotly.animate(
-              'grafico',
-              { data: novosDados },
-              { transition: { duration: 1000 }, frame: { duration: 1000 } }
-            );
-          }, 500); // Delay para garantir que o gráfico inicial seja renderizado
+          Plotly.react('grafico', traces, layout, { displayModeBar: false });
         }
 
         // Evento para atualizar o gráfico quando o usuário selecionar um ano
