@@ -105,7 +105,7 @@ function flipCard(card) {
 
 //----------------------------------------------------------------------------------------------------
 
-fetch('/api/votos')
+    fetch('/api/votos')
       .then(response => response.json())
       .then(data => {
         const anos = data.anos;
@@ -120,43 +120,71 @@ fetch('/api/votos')
             indices = [anos.indexOf(anoSelecionado)]; // Índice do ano selecionado
           }
 
-          // Preparar os dados para o gráfico
+          // Preparar os dados iniciais (colunas zeradas)
           const traces = partidos.map(partido => ({
             x: indices.map(i => anos[i]),
-            y: indices.map(i => partido.votos[i]),
-            mode: 'lines+markers',
+            y: indices.map(() => 0), // Valores iniciais zerados
+            type: 'bar',
             name: partido.nome,
-            line: { width: 3 },
-            marker: { size: 8 },
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => partido.percentual[i].toFixed(2)),
+            marker: { color: gerarCorAleatoria() }, // Cor aleatória para cada partido
           }));
 
-          // Adicionar linha de total
+          // Adicionar barra de total
           traces.push({
             x: indices.map(i => anos[i]),
-            y: indices.map(i => data.total[i]),
-            mode: 'lines+markers',
+            y: indices.map(() => 0), // Valores iniciais zerados
+            type: 'bar',
             name: 'Total',
-            line: { color: '#000', width: 2, dash: 'dash' },
-            marker: { size: 8 },
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => data.percentualTotal[i].toFixed(2)),
+            marker: { color: '#007bff' }, // Azul vibrante para o total
           });
 
           const layout = {
             title: anoSelecionado === "todos"
-              ? 'Crescimento da Votação por Partido (2014-2022)'
+              ? 'Distribuição de Votos por Partido (2014-2022)'
               : `Votação em ${anoSelecionado}`,
+            barmode: 'group', // Barras agrupadas
             xaxis: { title: 'Ano' },
             yaxis: { title: 'Número de Votos' },
-            hovermode: 'closest',
+            plot_bgcolor: '#f9f9f9', // Fundo do gráfico
+            paper_bgcolor: '#f9f9f9', // Fundo externo
             transition: { duration: 500 }, // Animação suave
-            plot_bgcolor: '#f9f9f9', // Cor de fundo do gráfico
-            paper_bgcolor: '#f9f9f9', // Cor de fundo da área externa
           };
 
-          Plotly.react('grafico', traces, layout, { displayModeBar: false });
+          // Criar o gráfico inicial com valores zerados
+          Plotly.newPlot('grafico', traces, layout, { displayModeBar: false });
+
+          // Animar o crescimento das colunas
+          setTimeout(() => {
+            const novosDados = partidos.map(partido => ({
+              y: indices.map(i => partido.votos[i]), // Valores reais
+            }));
+
+            // Adicionar os dados do total
+            novosDados.push({
+              y: indices.map(i => data.total[i]), // Valores reais do total
+            });
+
+            // Animar o gráfico
+            Plotly.animate(
+              'grafico',
+              { data: novosDados },
+              { transition: { duration: 1000 }, frame: { duration: 1000 } }
+            );
+          }, 500); // Delay para garantir que o gráfico inicial seja renderizado
+        }
+
+        // Função para gerar cores aleatórias
+        function gerarCorAleatoria() {
+          const letras = '0123456789ABCDEF';
+          let cor = '#';
+          for (let i = 0; i < 6; i++) {
+            cor += letras[Math.floor(Math.random() * 16)];
+          }
+          return cor;
         }
 
         // Evento para atualizar o gráfico quando o usuário selecionar um ano
