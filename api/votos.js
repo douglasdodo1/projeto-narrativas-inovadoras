@@ -1,4 +1,4 @@
-// api/votos.js
+﻿// api/votos.js
 export default function handler(req, res) {
   const dados = {
     anos: ["2014", "2018", "2022"],
@@ -9,7 +9,7 @@ export default function handler(req, res) {
         percentual: [8.06, 17.57, 14.36],
       },
       {
-        nome: "Uni�o (DEM/PSL)",
+        nome: "União (DEM/PSL)",
         votos: [69199, 178253 + 89682, 460153],
         percentual: [1.50, 3.95 + 1.99, 9.18],
       },

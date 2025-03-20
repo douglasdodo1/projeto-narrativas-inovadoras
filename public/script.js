@@ -105,47 +105,66 @@ function flipCard(card) {
 
 //----------------------------------------------------------------------------------------------------
 
-  // Função para carregar os dados da API e criar o gráfico
-  fetch('/api/votos')
-    .then(response => response.json())
-    .then(data => {
-      const anos = data.anos;
-      const partidos = data.partidos;
+fetch('/api/votos')
+      .then(response => response.json())
+      .then(data => {
+        const anos = data.anos;
+        const partidos = data.partidos;
 
-      // Preparar os dados para o gráfico
-      const traces = partidos.map(partido => ({
-        x: anos,
-        y: partido.votos,
-        mode: 'lines+markers',
-        name: partido.nome,
-        hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
-        text: partido.percentual.map(p => p.toFixed(2)),
-      }));
+        // Função para criar o gráfico com base no ano selecionado
+        function criarGrafico(anoSelecionado) {
+          let indices = [];
+          if (anoSelecionado === "todos") {
+            indices = anos.map((_, index) => index); // Todos os anos
+          } else {
+            indices = [anos.indexOf(anoSelecionado)]; // Índice do ano selecionado
+          }
 
-      // Adicionar linha de total
-      traces.push({
-        x: anos,
-        y: data.total,
-        mode: 'lines+markers',
-        name: 'Total',
-        line: { color: 'black', width: 2, dash: 'dash' },
-        hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
-        text: data.percentualTotal.map(p => p.toFixed(2)),
-      });
+          // Preparar os dados para o gráfico
+          const traces = partidos.map(partido => ({
+            x: indices.map(i => anos[i]),
+            y: indices.map(i => partido.votos[i]),
+            mode: 'lines+markers',
+            name: partido.nome,
+            line: { width: 3 },
+            marker: { size: 8 },
+            hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
+            text: indices.map(i => partido.percentual[i].toFixed(2)),
+          }));
 
-      const layout = {
-        title: 'Crescimento da Votação por Partido (2014-2022)',
-        xaxis: { title: 'Ano' },
-        yaxis: { title: 'Número de Votos' },
-        hovermode: 'closest',
-        transition: { duration: 500 }, // Animação suave
-      };
+          // Adicionar linha de total
+          traces.push({
+            x: indices.map(i => anos[i]),
+            y: indices.map(i => data.total[i]),
+            mode: 'lines+markers',
+            name: 'Total',
+            line: { color: '#000', width: 2, dash: 'dash' },
+            marker: { size: 8 },
+            hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
+            text: indices.map(i => data.percentualTotal[i].toFixed(2)),
+          });
 
-      // Configuração para remover a barra de ferramentas
-      const config = {
-        displayModeBar: false, // Remove os botões de interação
-      };
+          const layout = {
+            title: anoSelecionado === "todos"
+              ? 'Crescimento da Votação por Partido (2014-2022)'
+              : `Votação em ${anoSelecionado}`,
+            xaxis: { title: 'Ano' },
+            yaxis: { title: 'Número de Votos' },
+            hovermode: 'closest',
+            transition: { duration: 500 }, // Animação suave
+            plot_bgcolor: '#f9f9f9', // Cor de fundo do gráfico
+            paper_bgcolor: '#f9f9f9', // Cor de fundo da área externa
+          };
 
-      Plotly.newPlot('grafico', traces, layout, config);
-    })
-    .catch(error => console.error('Erro ao carregar dados:', error));
+          Plotly.react('grafico', traces, layout, { displayModeBar: false });
+        }
+
+        // Evento para atualizar o gráfico quando o usuário selecionar um ano
+        document.getElementById('anoSelecionado').addEventListener('change', (event) => {
+          criarGrafico(event.target.value);
+        });
+
+        // Criar o gráfico inicial com todos os anos
+        criarGrafico("todos");
+      })
+      .catch(error => console.error('Erro ao carregar dados:', error));
