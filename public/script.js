@@ -111,6 +111,15 @@ function flipCard(card) {
         const anos = data.anos;
         const partidos = data.partidos;
 
+        // Definir cores fixas para cada partido (melhor consistência visual)
+        const coresPartidos = {
+          "PP": "#00ff99", // Verde neon
+          "União (DEM/PSL)": "#ff0066", // Rosa neon
+          "PL": "#00bfff", // Azul claro
+          "Republicanos": "#ff6347", // Vermelho tomate
+          "Total": "#ffffff", // Branco para o total
+        };
+
         // Função para criar o gráfico com base no ano selecionado
         function criarGrafico(anoSelecionado) {
           let indices = [];
@@ -128,7 +137,7 @@ function flipCard(card) {
             name: partido.nome,
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => partido.percentual[i].toFixed(2)),
-            marker: { color: gerarCorAleatoria() }, // Cor aleatória para cada partido
+            marker: { color: coresPartidos[partido.nome] }, // Cor fixa para cada partido
           }));
 
           // Adicionar barra de total
@@ -139,18 +148,19 @@ function flipCard(card) {
             name: 'Total',
             hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
             text: indices.map(i => data.percentualTotal[i].toFixed(2)),
-            marker: { color: '#007bff' }, // Azul vibrante para o total
+            marker: { color: coresPartidos["Total"] }, // Cor fixa para o total
           });
 
           const layout = {
             title: anoSelecionado === "todos"
               ? 'Distribuição de Votos por Partido (2014-2022)'
               : `Votação em ${anoSelecionado}`,
-            barmode: 'group', // Barras agrupadas
-            xaxis: { title: 'Ano' },
-            yaxis: { title: 'Número de Votos' },
-            plot_bgcolor: '#f9f9f9', // Fundo do gráfico
-            paper_bgcolor: '#f9f9f9', // Fundo externo
+            barmode: 'stack', // Barras empilhadas
+            xaxis: { title: 'Ano', tickfont: { color: '#ffffff' } },
+            yaxis: { title: 'Número de Votos', tickfont: { color: '#ffffff' } },
+            plot_bgcolor: '#1e1e1e', // Fundo do gráfico
+            paper_bgcolor: '#1e1e1e', // Fundo externo
+            font: { color: '#ffffff' }, // Cor do texto
             transition: { duration: 500 }, // Animação suave
           };
 
@@ -175,16 +185,6 @@ function flipCard(card) {
               { transition: { duration: 1000 }, frame: { duration: 1000 } }
             );
           }, 500); // Delay para garantir que o gráfico inicial seja renderizado
-        }
-
-        // Função para gerar cores aleatórias
-        function gerarCorAleatoria() {
-          const letras = '0123456789ABCDEF';
-          let cor = '#';
-          for (let i = 0; i < 6; i++) {
-            cor += letras[Math.floor(Math.random() * 16)];
-          }
-          return cor;
         }
 
         // Evento para atualizar o gráfico quando o usuário selecionar um ano
