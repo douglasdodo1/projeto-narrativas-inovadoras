@@ -98,3 +98,43 @@ function flipCard(card) {
     card.classList.toggle('flipped');
 }
 
+//----------------------------------------------------------------------------------------------------
+
+    fetch('/api/votos')
+      .then(response => response.json())
+      .then(data => {
+        const anos = data.anos;
+        const partidos = data.partidos;
+
+        // Preparar os dados para o gráfico
+        const traces = partidos.map(partido => ({
+          x: anos,
+          y: partido.votos,
+          mode: 'lines+markers',
+          name: partido.nome,
+          hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
+          text: partido.percentual.map(p => p.toFixed(2)),
+        }));
+
+        // Adicionar linha de total
+        traces.push({
+          x: anos,
+          y: data.total,
+          mode: 'lines+markers',
+          name: 'Total',
+          line: { color: 'black', width: 2, dash: 'dash' },
+          hovertemplate: '%{y} votos (%{text}%)<extra></extra>',
+          text: data.percentualTotal.map(p => p.toFixed(2)),
+        });
+
+        const layout = {
+          title: 'Crescimento da Votação por Partido (2014-2022)',
+          xaxis: { title: 'Ano' },
+          yaxis: { title: 'Número de Votos' },
+          hovermode: 'closest',
+          transition: { duration: 500 }, // Animação suave
+        };
+
+        Plotly.newPlot('grafico', traces, layout);
+      })
+      .catch(error => console.error('Erro ao carregar dados:', error));
