@@ -21,6 +21,11 @@
       height: 250
     };
 
+    // Configuração para remover a barra de ferramentas
+    const config = {
+      displayModeBar: false, // Remove os botões de interação
+    };
+
     Plotly.newPlot('sunburst-graph', [trace], layout);
   })
   .catch(error => console.error('Erro ao carregar dados:', error));
@@ -134,6 +139,11 @@ function flipCard(card) {
           hovermode: 'closest',
           transition: { duration: 500 }, // Animação suave
         };
+
+      // Configuração para remover a barra de ferramentas
+      const config = {
+        displayModeBar: false, // Remove os botões de interação
+      };
 
         Plotly.newPlot('grafico', traces, layout);
       })
