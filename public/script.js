@@ -25,7 +25,7 @@
   })
   .catch(error => console.error('Erro ao carregar dados:', error));
 
-
+// Função que insere os cards no container
 window.onload = function() {
   // Fetch para pegar os dados da API
   fetch('/api/cards')
