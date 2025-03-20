@@ -97,3 +97,4 @@ window.onload = function() {
 function flipCard(card) {
     card.classList.toggle('flipped');
 }
+
