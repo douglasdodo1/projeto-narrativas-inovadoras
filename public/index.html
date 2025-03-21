@@ -217,6 +217,25 @@
             }
         }
         }
+/*Style do mapa de reduto eleitoral*/
+
+        .image-container {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
     </style>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -279,6 +298,24 @@
             </section>
         </section>
 
+
+        <div class="container">
+            <label for="imageSelector">Escolha uma opção:</label>
+            <select id="imageSelector">
+                <option value="">Selecione...</option>
+                <option value="adalto-santos.png">Adalto Santos</option>
+                <option value="cleiton-collins.png">Pastor Cleiton Collins</option>
+                <option value="joel-da-harpa.png">Joel da Harpa</option>
+                <option value="junior-tercio.png">Júnior Tércio</option>
+                <option value="renato-antunes.png">Renato Antunes</option>
+                <option value="romero-sales-filho.png">Romero Sales Filho</option>
+                <option value="william-brigido.png">William Brigido</option>
+            </select>
+
+            <div class="image-container">
+                <img id="displayedImage" src="" alt="Imagem Selecionada" style="display: none;">
+            </div>
+        </div>
 
     </main>
 
