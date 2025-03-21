@@ -172,14 +172,20 @@ fetch('/api/votos')
 //--------------------------------------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('palavras-container');
-    const width = container.offsetWidth;
+    const width = container.offsetWidth; // Largura do contêiner
     const height = 400; // Altura fixa para o contêiner
 
-    // Função para posicionar as palavras aleatoriamente
-    const posicionarPalavra = () => {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
-        return { x, y };
+    // Função para posicionar as palavras dentro do contêiner
+    const posicionarPalavra = (span) => {
+        const spanWidth = span.offsetWidth; // Largura da palavra
+        const spanHeight = span.offsetHeight; // Altura da palavra
+
+        // Calcula uma posição aleatória, mas garante que a palavra fique dentro do contêiner
+        const x = Math.random() * (width - spanWidth);
+        const y = Math.random() * (height - spanHeight);
+
+        span.style.left = `${x}px`;
+        span.style.top = `${y}px`;
     };
 
     // Carregar os dados da função serverless
@@ -194,17 +200,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const fontSize = `${item.tamanho}%`;
                 span.style.fontSize = fontSize;
 
-                // Posicionar a palavra aleatoriamente
-                const { x, y } = posicionarPalavra();
-                span.style.position = 'absolute';
-                span.style.left = `${x}px`;
-                span.style.top = `${y}px`;
-
-                // Adicionar animação de flutuação
-                span.style.animation = `flutuar ${Math.random() * 5 + 3}s infinite ease-in-out alternate`;
-
                 // Adicionar a palavra ao contêiner
                 container.appendChild(span);
+
+                // Aguardar o layout ser renderizado para calcular o tamanho da palavra
+                setTimeout(() => {
+                    posicionarPalavra(span);
+                    span.style.animation = `flutuar ${Math.random() * 5 + 3}s infinite ease-in-out alternate`;
+                }, 0);
             });
         })
         .catch(error => console.error('Erro ao carregar dados:', error));

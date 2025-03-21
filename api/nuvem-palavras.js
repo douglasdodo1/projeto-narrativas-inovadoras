@@ -2,7 +2,7 @@
 export default async function handler(req, res) {
     const data = [
         { palavra: "Saúde", tamanho: 100 },
-        { palavra: "Educação", tamanho: 250 },
+        { palavra: "Educação", tamanho: 100 },
         { palavra: "Infraestrutura", tamanho: 340 },
         { palavra: "Meio Ambiente", tamanho: 108 },
         { palavra: "Tecnologia", tamanho: 209 },

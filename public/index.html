@@ -186,21 +186,24 @@
     }
 
     /*Nuvem de palavras ---------------------------------------------------------------*/
+        /* Estilização do contêiner da nuvem de palavras */
         #nuvem-palavras {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 400px; /* Altura fixa para o contêiner */
             border: 2px solid #ccc;
-            overflow: hidden;
+            overflow: hidden; /* Garante que nada "vaze" */
             background-color: #f9f9f9;
         }
 
+        /* Estilização das palavras */
         #palavras-container span {
             position: absolute;
-            white-space: nowrap;
+            white-space: nowrap; /* Impede quebras de linha */
             cursor: default;
             color: #333;
             font-weight: bold;
+            transform-origin: center; /* Centraliza a transformação */
         }
 
         /* Animação de flutuação */
@@ -210,8 +213,9 @@
             }
 
             to {
-                transform: translateY(-20px);
+                transform: translateY(-25px);
             }
+        }
         }
     </style>
 
