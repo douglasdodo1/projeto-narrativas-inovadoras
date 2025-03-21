@@ -168,3 +168,44 @@ fetch('/api/votos')
         criarGrafico("todos");
       })
       .catch(error => console.error('Erro ao carregar dados:', error));
+
+//--------------------------------------------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('palavras-container');
+    const width = container.offsetWidth;
+    const height = 400; // Altura fixa para o contêiner
+
+    // Função para posicionar as palavras aleatoriamente
+    const posicionarPalavra = () => {
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        return { x, y };
+    };
+
+    // Carregar os dados da função serverless
+    fetch('/api/nuvem-palavras')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(item => {
+                const span = document.createElement('span');
+                span.textContent = item.palavra;
+
+                // Definir o tamanho da palavra baseado na porcentagem
+                const fontSize = `${item.tamanho}%`;
+                span.style.fontSize = fontSize;
+
+                // Posicionar a palavra aleatoriamente
+                const { x, y } = posicionarPalavra();
+                span.style.position = 'absolute';
+                span.style.left = `${x}px`;
+                span.style.top = `${y}px`;
+
+                // Adicionar animação de flutuação
+                span.style.animation = `flutuar ${Math.random() * 5 + 3}s infinite ease-in-out alternate`;
+
+                // Adicionar a palavra ao contêiner
+                container.appendChild(span);
+            });
+        })
+        .catch(error => console.error('Erro ao carregar dados:', error));
+});

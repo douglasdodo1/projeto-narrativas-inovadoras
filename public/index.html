@@ -184,6 +184,35 @@
     select:hover {
       border-color: #007bff; /* Azul vibrante no hover */
     }
+
+    /*Nuvem de palavras ---------------------------------------------------------------*/
+        #nuvem-palavras {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border: 2px solid #ccc;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+
+        #palavras-container span {
+            position: absolute;
+            white-space: nowrap;
+            cursor: default;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Animação de flutuação */
+        @keyframes flutuar {
+            from {
+                transform: translateY(0px);
+            }
+
+            to {
+                transform: translateY(-20px);
+            }
+        }
     </style>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -240,9 +269,10 @@
 
         <!-- Texto final -->
         <section class="texto-final">
-            <p>
-                .
-            </p>
+            <!-- Seção da Nuvem de Palavras -->
+            <section id="nuvem-palavras">
+                <div id="palavras-container"></div>
+            </section>
         </section>
 
 
