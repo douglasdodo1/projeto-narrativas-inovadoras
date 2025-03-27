@@ -69,15 +69,20 @@ window.onload = function() {
               const descricao = document.createElement('p');
               descricao.textContent = `Descrição: ${deputado.descricao}`;
 
-              const citacao = document.createElement('p');
-              citacao.textContent = `Citação: ${deputado.citacao}`;
+              const votos = document.createElement('p');
+              votos.textContent = `Votos: ${deputado.votos}`;
 
-              const projetos = document.createElement('p');
-              projetos.textContent = `Projetos: ${deputado.projetos.join(', ')}`;
+              const seguidores = document.createElement('p');
+              seguidores.textContent = `Projetos: ${deputado.seguidores}`;
+
+              const candidatura = document.createElement('p');
+              candidatura.textContent = `Candidatura: ${deputado.candidatura}`;
+
 
               cardBack.appendChild(descricao);
-              cardBack.appendChild(citacao);
-              cardBack.appendChild(projetos);
+              cardBack.appendChild(votos);
+              cardBack.appendChild(seguidores);
+              cardBack.appendChild(candidatura);
 
               // Adiciona o conteúdo da frente e do verso ao card
               cardInner.appendChild(cardFront);
