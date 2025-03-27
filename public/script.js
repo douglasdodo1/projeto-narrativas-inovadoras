@@ -215,26 +215,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //------------------------------------------------------------------------------------------------
 //reduto eleitoral
-document.addEventListener("DOMContentLoaded", function () {
-const selector = document.getElementById("imageSelector");
-const image = document.getElementById("displayedImage");
+document.addEventListener("DOMContentLoaded", function() {
+  const selector = document.getElementById("iframeSelector");
+  const iframes = document.querySelectorAll("#iframeContainer iframe");
 
-selector.addEventListener("change", function () {
-    const selectedValue = selector.value;
-        
-    if (selectedValue) {
-        image.style.opacity = "0"; // Oculta a imagem antes da troca
-            
-        setTimeout(() => {
-            image.src = `images/${selectedValue}`;
-            image.style.display = "block";
-            image.style.opacity = "1"; // Mostra a nova imagem suavemente
-        }, 300); // Tempo para a transição
-    } else {
-        image.style.opacity = "0"; // Oculta a imagem se nada for selecionado
-        setTimeout(() => {
-            image.style.display = "none";
-        }, 300);
-    }
-});
+  selector.addEventListener("change", function() {
+      // Oculta todos os iframes
+      iframes.forEach(iframe => iframe.style.display = "none");
+
+      // Obtém o valor selecionado
+      const selectedId = selector.value;
+      if (selectedId) {
+          // Exibe o iframe correspondente
+          document.getElementById(selectedId).style.display = "block";
+      }
+  });
 });
