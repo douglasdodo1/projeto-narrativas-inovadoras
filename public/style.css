@@ -58,7 +58,6 @@ main section.texto-final {
         display: flex;
         justify-content: center;
         align-items: center;
-        /* Para garantir que o gráfico se ajuste sem descer ou ficar fora de proporção */
         height: auto;
     }
 
@@ -79,6 +78,7 @@ p {
     font-size: 1.1em;
     line-height: 1.6;
     color: white;
+    margin-bootom: 10px;
 }
 /* Daqui pra baixo é referente ao cards-grid e flip cards */
 .cards-grid {
