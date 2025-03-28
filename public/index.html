@@ -43,17 +43,7 @@
         </section>
 
 
-        <section class="texto-final">
-            <!-- Lista suspensa para selecionar o ano -->
-            <select id="anoSelecionado">
-                <option value="todos">Todos os Anos</option>
-                <option value="2014">2014</option>
-                <option value="2018">2018</option>
-                <option value="2022">2022</option>
-            </select>
 
-            <div id="grafico"></div>
-        </section>
 
         <!-- Texto final -->
         <section class="texto-final">
@@ -92,13 +82,30 @@
     </main>
 
 
-    <!-- Seção com gráfico sunburst e texto -->
-    <section class="grafico-e-texto">
-        <div class="texto">
+    <section class="grafico-carrossel">
+        <!-- Botões de navegação -->
+        <button id="prevGraph" class="carousel-button">&#10094;</button>
+        <button id="nextGraph" class="carousel-button">&#10095;</button>
 
-        </div>
-        <div class="grafico">
-            <div id="sunburst-graph"></div>
+        <!-- Contêiner do carrossel -->
+        <div id="graphCarousel" class="carousel-container">
+            <!-- Gráfico de Ano Selecionado -->
+            <div class="carousel-item">
+                <select id="anoSelecionado">
+                    <option value="todos">Todos os Anos</option>
+                    <option value="2014">2014</option>
+                    <option value="2018">2018</option>
+                    <option value="2022">2022</option>
+                </select>
+                <div id="grafico"></div>
+            </div>
+
+            <!-- Gráfico Sunburst -->
+            <div class="carousel-item">
+                <div id="sunburst-graph"></div>
+            </div>
+
+            <!-- Adicione mais gráficos aqui conforme necessário -->
         </div>
     </section>
 
