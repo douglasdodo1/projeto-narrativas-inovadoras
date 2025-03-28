@@ -72,6 +72,7 @@ function flipCard(card) {
 }
 
 //--------------------------Gráfico de Votos por Partido--------------------------
+
 fetch('/api/votos')
   .then(response => response.json())
   .then(data => {
@@ -80,8 +81,8 @@ fetch('/api/votos')
 
     function criarGrafico(anoSelecionado) {
       let indices = anoSelecionado === "todos"
-        ? anos.map((_, index) => index)//Todos os anos
-        : [anos.indexOf(anoSelecionado)];//Apenas o ano selecionado
+        ? anos.map((_, index) => index) // Todos os anos
+        : [anos.indexOf(anoSelecionado)]; // Apenas o ano selecionado
 
       const traces = partidos.map(partido => ({
         x: indices.map(i => anos[i]),
@@ -94,7 +95,7 @@ fetch('/api/votos')
         text: indices.map(i => partido.percentual[i].toFixed(2)),
       }));
 
-      //Linha total de votos
+      // Linha total de votos
       traces.push({
         x: indices.map(i => anos[i]),
         y: indices.map(i => data.total[i]),
@@ -106,6 +107,25 @@ fetch('/api/votos')
         text: indices.map(i => data.percentualTotal[i].toFixed(2)),
       });
 
+      // Traces invisíveis para eventos históricos (hover)
+      const eventosHistoricos = [
+        { ano: 2014, descricao: '(Início da Operação Lava Jato)', cor: 'blue' },
+        { ano: 2018, descricao: '(Bolsonaro se lança à presidência)', cor: 'blue' }
+      ];
+
+      eventosHistoricos.forEach(evento => {
+        traces.push({
+          x: [evento.ano, evento.ano], // Linha vertical
+          y: [0, Math.max(...data.total)], // Altura máxima do gráfico
+          mode: 'lines',
+          name: evento.descricao,
+          line: { color: evento.cor, width: 2, dash: 'dot' },
+          hoverinfo: 'none', // Desativa o hover padrão
+          hovertemplate: `<b>${evento.descricao}</b><extra></extra>`, // Texto completo no hover
+          showlegend: false // Não mostrar na legenda
+        });
+      });
+
       const layout = {
         title: anoSelecionado === "todos"
           ? 'Crescimento da Votação por Partido (2014-2022)'
@@ -113,9 +133,17 @@ fetch('/api/votos')
         xaxis: { title: 'Ano' },
         yaxis: { title: 'Número de Votos' },
         hovermode: 'closest',
+        hoverlabel: {
+          bgcolor: 'white', // Fundo branco para melhor contraste
+          bordercolor: 'black', // Borda preta para delimitar
+          font: { size: 12 }, // Tamanho da fonte
+          align: 'left', // Alinhamento do texto
+          namelength: -1 // Evita truncamento do texto
+        },
         transition: { duration: 500 },
         plot_bgcolor: '#f9f9f9',
         paper_bgcolor: '#f9f9f9',
+        margin: { t: 60, b: 60, l: 60, r: 60 } // Margens maiores para evitar cortes
       };
 
       Plotly.react('grafico', traces, layout, { displayModeBar: false });
@@ -190,16 +218,20 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('scroll', () => {
   const fallMans = document.querySelectorAll('.fallMan');
   const scrollPosition = window.scrollY;
-  const maxScroll = 3500;//Ponto onde as imagens desaparecem
+  const maxScroll = 3500; // Ponto onde as imagens desaparecem
 
-  fallMans.forEach((fallMan) => {
-    let newTop = scrollPosition * 0.2;
-    let opacity = 1 - (scrollPosition / maxScroll);
+  fallMans.forEach((fallMan, index) => {
+    let newTop = scrollPosition * 0.2; // Movimento vertical
+    let opacity = 1 - (scrollPosition / maxScroll); // Opacidade diminui com o scroll
 
     opacity = Math.max(0, Math.min(1, opacity));
 
-    fallMan.style.top = `${newTop}px`;
+    // Calcula o movimento lateral suave usando Math.sin
+    let lateralMovement = Math.sin(scrollPosition * 0.02 + index) * 10; // Oscilação suave
+
+    // Aplica apenas o movimento lateral e vertical, preservando as transformações iniciais
+    fallMan.style.transform = `translate(${lateralMovement}px, ${newTop}px)`;
+
     fallMan.style.opacity = opacity;
   });
 });
-
