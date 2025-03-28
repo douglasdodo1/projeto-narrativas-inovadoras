@@ -22,7 +22,6 @@ main section.texto-final {
     margin: 0 auto;
 }
 
-/*-------------------------------------*/
 /* Se��o Gr�fico + Texto lado a lado */
 .grafico-e-texto {
     display: flex;
@@ -75,8 +74,6 @@ p {
     margin-bottom: 10px;
 }
 
-/*-------------------------------------*/
-/* Daqui pra baixo é referente ao cards-grid e flip cards */
 .cards-grid {
     display: flex;
     flex-direction: row;
@@ -159,8 +156,7 @@ p {
     margin: 10px 0;
 }
 
-/*-------------------------------------*/
-/* Gr�fico de Linha */
+
 #grafico {
     max-width: 800px;
     margin: 0 auto;
@@ -185,12 +181,14 @@ select {
         border-color: #007bff;
     }
 
+
 /*-------------------------------------*/
 /* Nuvem de Palavras */
 #nuvem-palavras {
     position: relative;
     width: 100%;
     height: 400px;
+
     border: 2px solid #ccc;
     overflow: hidden;
     background-color: #f9f9f9;
@@ -204,6 +202,7 @@ select {
     font-weight: bold;
 }
 
+
 @keyframes flutuar {
     from {
         transform: translateY(0px);
@@ -212,6 +211,23 @@ select {
     to {
         transform: translateY(-25px);
     }
+}
+
+
+
+/*Style do mapa de reduto eleitoral*/
+
+#iframeContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+iframe {
+    width: 80%;
+    height: 400px;
+    border: none;
+    display: none; /* Todos começam ocultos */
 }
 
 /*-------------------------------------*/
@@ -258,3 +274,4 @@ select {
     opacity: 0.9;
     width: 350px;
 }
+
