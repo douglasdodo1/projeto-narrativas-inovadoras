@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => console.error('Erro ao carregar dados:', error));
 });
 
+
 //--------------------------Reduto Eleitoral (Troca de Imagens)--------------------------
 document.addEventListener("DOMContentLoaded", function () {
   const selector = document.getElementById("imageSelector");
