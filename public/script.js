@@ -51,12 +51,26 @@ window.onload = function() {
               //Verso do card (descrição, citação e projetos)
               const cardBack = document.createElement('div');
               cardBack.classList.add('card-back');
-              cardBack.innerHTML = `
-                  <p>Descrição: ${deputado.descricao}</p>
-                  <p>Citação: ${deputado.citacao}</p>
-                  <p>Projetos: ${deputado.projetos.join(', ')}</p>
-              `;
 
+              const descricao = document.createElement('p');
+              descricao.textContent = `Descrição: ${deputado.descricao}`;
+
+              const votos = document.createElement('p');
+              votos.textContent = `Votos: ${deputado.votos}`;
+
+              const seguidores = document.createElement('p');
+              seguidores.textContent = `Seguidores: ${deputado.seguidores}`;
+
+              const candidatura = document.createElement('p');
+              candidatura.textContent = `Candidatura: ${deputado.candidatura}`;
+
+
+              cardBack.appendChild(descricao);
+              cardBack.appendChild(votos);
+              cardBack.appendChild(seguidores);
+              cardBack.appendChild(candidatura);
+
+              // Adiciona o conteúdo da frente e do verso ao card
               cardInner.appendChild(cardFront);
               cardInner.appendChild(cardBack);
               card.appendChild(cardInner);

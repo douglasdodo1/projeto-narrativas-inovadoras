@@ -23,7 +23,7 @@ main section.texto-final {
 }
 
 /*-------------------------------------*/
-/* Seção Gráfico + Texto lado a lado */
+/* Seï¿½ï¿½o Grï¿½fico + Texto lado a lado */
 .grafico-e-texto {
     display: flex;
     flex-wrap: wrap;
@@ -76,9 +76,10 @@ p {
 }
 
 /*-------------------------------------*/
-/* Cards e Flip Cards */
+/* Daqui pra baixo Ã© referente ao cards-grid e flip cards */
 .cards-grid {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
@@ -86,42 +87,38 @@ p {
 }
 
 .card {
-    height: 400px;
-    width: 250px;
+    height: 800px;
+    width: 425px;
     background: white;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
-    padding: 15px;
-    perspective: 1000px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+    padding: 10px;
+    perspective: 1000px; /* Para o efeito de 3D */
+    background-color:rgb(54, 56, 55);
 }
 
 .card-inner {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 95%;
+    margin-left: 7px; /* tava foda de centralizar essa merda */
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.6s;
 }
 
 .card img {
-    width: auto;
-    height: 80%;
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 60%;
     object-fit: cover;
     border-radius: 10px;
 }
 
-.card p {
-    color: black;
-}
-
 .card.flipped .card-inner {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg); /* Efeito de flip */
 }
 
 .card-front,
@@ -133,7 +130,7 @@ p {
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    background: white;
+    background:  #082441;
 }
 
 .card-front {
@@ -143,26 +140,27 @@ p {
     justify-content: center;
 }
 
-    .card-front h3,
-    .card-front p {
-        margin: 5px 0;
-    }
+.card-front h3,
+.card-front p {
+    margin: 0px 0;
+}
 
 .card-back {
-    transform: rotateY(180deg);
+    height: 95%;
+    width: 95%;
+    transform: rotateY(180deg) translateX(20px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
 }
 
-    .card-back p {
-        margin: 10px 0;
-    }
+.card-back p {
+    margin: 10px 0;
+}
 
 /*-------------------------------------*/
-/* Gráfico de Linha */
+/* Grï¿½fico de Linha */
 #grafico {
     max-width: 800px;
     margin: 0 auto;
