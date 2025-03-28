@@ -1,4 +1,4 @@
-// Simula uma API que retorna uma lista de deputados
+
 export default function handler(req, res) {
     const deputados = [
       {

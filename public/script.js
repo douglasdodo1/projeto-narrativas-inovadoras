@@ -95,8 +95,8 @@ fetch('/api/votos')
 
     function criarGrafico(anoSelecionado) {
       let indices = anoSelecionado === "todos"
-        ? anos.map((_, index) => index) // Todos os anos
-        : [anos.indexOf(anoSelecionado)]; // Apenas o ano selecionado
+        ? anos.map((_, index) => index) 
+        : [anos.indexOf(anoSelecionado)]; 
 
       const traces = partidos.map(partido => ({
         x: indices.map(i => anos[i]),
@@ -121,7 +121,6 @@ fetch('/api/votos')
         text: indices.map(i => data.percentualTotal[i].toFixed(2)),
       });
 
-      // Traces invisíveis para eventos históricos (hover)
       const eventosHistoricos = [
         { ano: 2014, descricao: '(Início da Operação Lava Jato)', cor: 'blue' },
         { ano: 2018, descricao: '(Bolsonaro se lança à presidência)', cor: 'blue' }
@@ -129,14 +128,14 @@ fetch('/api/votos')
 
       eventosHistoricos.forEach(evento => {
         traces.push({
-          x: [evento.ano, evento.ano], // Linha vertical
-          y: [0, Math.max(...data.total)], // Altura máxima do gráfico
+          x: [evento.ano, evento.ano], 
+          y: [0, Math.max(...data.total)], 
           mode: 'lines',
           name: evento.descricao,
           line: { color: evento.cor, width: 2, dash: 'dot' },
-          hoverinfo: 'none', // Desativa o hover padrão
-          hovertemplate: `<b>${evento.descricao}</b><extra></extra>`, // Texto completo no hover
-          showlegend: false // Não mostrar na legenda
+          hoverinfo: 'none', 
+          hovertemplate: `<b>${evento.descricao}</b><extra></extra>`,
+          showlegend: false 
         });
       });
 
@@ -148,16 +147,16 @@ fetch('/api/votos')
         yaxis: { title: 'Número de Votos' },
         hovermode: 'closest',
         hoverlabel: {
-          bgcolor: 'white', // Fundo branco para melhor contraste
-          bordercolor: 'black', // Borda preta para delimitar
-          font: { size: 12 }, // Tamanho da fonte
-          align: 'left', // Alinhamento do texto
-          namelength: -1 // Evita truncamento do texto
+          bgcolor: 'white', 
+          bordercolor: 'black', 
+          font: { size: 12 }, 
+          align: 'left', 
+          namelength: -1 
         },
         transition: { duration: 500 },
         plot_bgcolor: '#f9f9f9',
         paper_bgcolor: '#f9f9f9',
-        margin: { t: 60, b: 60, l: 60, r: 60 } // Margens maiores para evitar cortes
+        margin: { t: 60, b: 60, l: 60, r: 60 } 
       };
 
       Plotly.react('grafico', traces, layout, { displayModeBar: false });
@@ -175,36 +174,79 @@ fetch('/api/votos')
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('palavras-container');
   const width = container.offsetWidth;
-  const height = 400;//Altura fixa
+  const height = 400;
 
-  function posicionarPalavra(span) {
-    const spanWidth = span.offsetWidth;
-    const spanHeight = span.offsetHeight;
-    const x = Math.random() * (width - spanWidth);
-    const y = Math.random() * (height - spanHeight);
+  function colide(element1, element2) {
+    const rect1 = element1.getBoundingClientRect();
+    const rect2 = element2.getBoundingClientRect();
 
-    span.style.left = `${x}px`;
-    span.style.top = `${y}px`;
+    return !(
+      rect1.right < rect2.left ||
+      rect1.left > rect2.right ||
+      rect1.bottom < rect2.top ||
+      rect1.top > rect2.bottom
+    );
+  }
+
+  function posicionarPalavra(el, elementosExistentes) {
+    let tentativas = 0;
+    const maxTentativas = 100;
+
+    while (tentativas < maxTentativas) {
+      const elWidth = el.offsetWidth;
+      const elHeight = el.offsetHeight;
+      const x = Math.random() * (width - elWidth);
+      const y = Math.random() * (height - elHeight);
+
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+
+      let colidiu = false;
+      for (const outroEl of elementosExistentes) {
+        if (colide(el, outroEl)) {
+          colidiu = true;
+          break;
+        }
+      }
+
+      if (!colidiu) {
+        return;
+      }
+
+      tentativas++;
+    }
+
+    console.warn('Não foi possível encontrar uma posição válida para a palavra:', el.textContent);
   }
 
   fetch('/api/nuvem-palavras')
     .then(response => response.json())
     .then(data => {
+      const elementosExistentes = [];
+
       data.forEach(item => {
-        const span = document.createElement('span');
-        span.textContent = item.palavra;
-        span.style.fontSize = `${item.tamanho}%`;
-        container.appendChild(span);
+        const link = document.createElement('a');
+        link.href = item.url;
+        link.target = '_blank';
+        link.textContent = item.palavra;
+        link.style.fontSize = `${item.tamanho}%`;
+        link.style.position = 'absolute';
+        link.style.textDecoration = 'none';
+        link.style.color = 'black';
+        link.style.fontWeight = 'bold';
+        link.style.cursor = 'pointer';
+
+        container.appendChild(link);
+        elementosExistentes.push(link);
 
         setTimeout(() => {
-          posicionarPalavra(span);
-          span.style.animation = `flutuar ${Math.random() * 5 + 3}s infinite ease-in-out alternate`;
+          posicionarPalavra(link, elementosExistentes);
+          link.style.animation = `flutuar ${Math.random() * 5 + 3}s infinite ease-in-out alternate`;
         }, 0);
       });
     })
     .catch(error => console.error('Erro ao carregar dados:', error));
 });
-
 
 //--------------------------Reduto Eleitoral (Troca de Imagens)--------------------------
 
@@ -245,4 +287,41 @@ document.addEventListener('scroll', () => {
 
     fallMan.style.opacity = opacity;
   });
+});
+//-------------------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('graphCarousel');
+    const prevButton = document.getElementById('prevGraph');
+    const nextButton = document.getElementById('nextGraph');
+    const items = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    // Função para atualizar o carrossel
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+    // Avançar para o próximo gráfico
+    nextButton.addEventListener('click', () => {
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Volta ao primeiro gráfico
+        }
+        updateCarousel();
+    });
+
+    // Voltar para o gráfico anterior
+    prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = items.length - 1; // Vai para o último gráfico
+        }
+        updateCarousel();
+    });
+
+    // Inicializa o carrossel
+    updateCarousel();
 });

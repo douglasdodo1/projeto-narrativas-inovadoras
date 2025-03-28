@@ -1,4 +1,4 @@
-﻿// api/votos.js
+﻿
 export default function handler(req, res) {
   const dados = {
     anos: ["2014", "2018", "2022"],
