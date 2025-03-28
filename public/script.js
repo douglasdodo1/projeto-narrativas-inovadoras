@@ -1,4 +1,4 @@
-﻿//--------------------------Sunburst Chart--------------------------
+﻿//--------------------------Sunburst Gráfico--------------------------
 fetch('/api/sunburst')
   .then(response => response.json())
   .then(data => {
@@ -70,7 +70,7 @@ window.onload = function() {
               cardBack.appendChild(seguidores);
               cardBack.appendChild(candidatura);
 
-              // Adiciona o conteúdo da frente e do verso ao card
+              //Adiciona o conteúdo da frente e do verso ao card
               cardInner.appendChild(cardFront);
               cardInner.appendChild(cardBack);
               card.appendChild(cardInner);
@@ -109,7 +109,7 @@ fetch('/api/votos')
         text: indices.map(i => partido.percentual[i].toFixed(2)),
       }));
 
-      // Linha total de votos
+      //Linha total de votos
       traces.push({
         x: indices.map(i => anos[i]),
         y: indices.map(i => data.total[i]),
@@ -255,13 +255,13 @@ document.addEventListener("DOMContentLoaded", function() {
   const iframes = document.querySelectorAll("#iframeContainer iframe");
 
   selector.addEventListener("change", function() {
-      // Oculta todos os iframes
+      //Ocultamos todos os iframes por aq
       iframes.forEach(iframe => iframe.style.display = "none");
 
-      // Obtém o valor selecionado
+      //Obtém o valor selecionado pelo user
       const selectedId = selector.value;
       if (selectedId) {
-          // Exibe o iframe correspondente
+          // Exibe o iframe correspondente ao escolhido
           document.getElementById(selectedId).style.display = "block";
       }
   });
@@ -271,24 +271,22 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener('scroll', () => {
   const fallMans = document.querySelectorAll('.fallMan');
   const scrollPosition = window.scrollY;
-  const maxScroll = 3500; // Ponto onde as imagens desaparecem
+  const maxScroll = 3500; 
 
   fallMans.forEach((fallMan, index) => {
-    let newTop = scrollPosition * 0.2; // Movimento vertical
-    let opacity = 1 - (scrollPosition / maxScroll); // Opacidade diminui com o scroll
+    let newTop = scrollPosition * 0.2; 
+    let opacity = 1 - (scrollPosition / maxScroll); 
 
     opacity = Math.max(0, Math.min(1, opacity));
+    
+    let lateralMovement = Math.sin(scrollPosition * 0.02 + index) * 10; 
 
-    // Calcula o movimento lateral suave usando Math.sin
-    let lateralMovement = Math.sin(scrollPosition * 0.02 + index) * 10; // Oscilação suave
-
-    // Aplica apenas o movimento lateral e vertical, preservando as transformações iniciais
     fallMan.style.transform = `translate(${lateralMovement}px, ${newTop}px)`;
 
     fallMan.style.opacity = opacity;
   });
 });
-//-------------------------------------------------------------------------------------
+//---------------------------Carrosel de gráficos-------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('graphCarousel');
     const prevButton = document.getElementById('prevGraph');
@@ -296,32 +294,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.carousel-item');
     let currentIndex = 0;
 
-    // Função para atualizar o carrossel
+    //Função para atualizar o carrossel
     function updateCarousel() {
         const offset = -currentIndex * 100;
         carousel.style.transform = `translateX(${offset}%)`;
     }
 
-    // Avançar para o próximo gráfico
+    //avançar p/ o próximo gráfico
     nextButton.addEventListener('click', () => {
         if (currentIndex < items.length - 1) {
             currentIndex++;
         } else {
-            currentIndex = 0; // Volta ao primeiro gráfico
+            currentIndex = 0; //volta ao primeiro gráfico
         }
         updateCarousel();
     });
 
-    // Voltar para o gráfico anterior
+    //Voltar para o gráfico anterior
     prevButton.addEventListener('click', () => {
         if (currentIndex > 0) {
             currentIndex--;
         } else {
-            currentIndex = items.length - 1; // Vai para o último gráfico
+            currentIndex = items.length - 1; 
         }
         updateCarousel();
     });
 
-    // Inicializa o carrossel
     updateCarousel();
 });

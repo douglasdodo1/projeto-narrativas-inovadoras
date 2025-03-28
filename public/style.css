@@ -15,7 +15,7 @@ header {
 
 /*-------------------------------------*/
 /* Texto Inicial e Final */
-main section.texto-inicial,
+main section.texto,
 main section.texto-final {
     padding: 40px 20px;
     max-width: 650px;
@@ -213,7 +213,7 @@ select {
     }
 
     to {
-        transform: translateY(-25px);
+        transform: translateY(-8px);
     }
 }
 
