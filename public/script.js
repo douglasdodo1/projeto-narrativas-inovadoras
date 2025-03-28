@@ -205,26 +205,23 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => console.error('Erro ao carregar dados:', error));
 });
 
-//--------------------------Reduto Eleitoral (Troca de Imagens)--------------------------
-document.addEventListener("DOMContentLoaded", function () {
-  const selector = document.getElementById("imageSelector");
-  const image = document.getElementById("displayedImage");
 
-  selector.addEventListener("change", function () {
-    const selectedValue = selector.value;
-    if (selectedValue) {
-      image.style.opacity = "0";
-      setTimeout(() => {
-        image.src = `images/${selectedValue}`;
-        image.style.display = "block";
-        image.style.opacity = "1";
-      }, 300);
-    } else {
-      image.style.opacity = "0";
-      setTimeout(() => {
-        image.style.display = "none";
-      }, 300);
-    }
+//--------------------------Reduto Eleitoral (Troca de Imagens)--------------------------
+
+document.addEventListener("DOMContentLoaded", function() {
+  const selector = document.getElementById("iframeSelector");
+  const iframes = document.querySelectorAll("#iframeContainer iframe");
+
+  selector.addEventListener("change", function() {
+      // Oculta todos os iframes
+      iframes.forEach(iframe => iframe.style.display = "none");
+
+      // Obtém o valor selecionado
+      const selectedId = selector.value;
+      if (selectedId) {
+          // Exibe o iframe correspondente
+          document.getElementById(selectedId).style.display = "block";
+      }
   });
 });
 
