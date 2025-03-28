@@ -73,7 +73,7 @@ window.onload = function() {
               votos.textContent = `Votos: ${deputado.votos}`;
 
               const seguidores = document.createElement('p');
-              seguidores.textContent = `Projetos: ${deputado.seguidores}`;
+              seguidores.textContent = `Seguidores: ${deputado.seguidores}`;
 
               const candidatura = document.createElement('p');
               candidatura.textContent = `Candidatura: ${deputado.candidatura}`;
