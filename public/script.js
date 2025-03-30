@@ -286,6 +286,21 @@ document.addEventListener('scroll', () => {
     fallMan.style.opacity = opacity;
   });
 });
+//-----------------------------Efeito de queda do título-----------------------------
+document.addEventListener('scroll', () => {
+  const h1 = document.getElementById('titulo'); // Seleciona o elemento <h1>
+  const scrollPosition = window.scrollY; // Obtém a posição atual do scroll
+  const maxScroll = 3900; // Define o limite máximo de scroll para o efeito
+
+  if (scrollPosition <= maxScroll) {
+    // Calcula a nova posição vertical do <h1> com base no scroll
+    let newTop = Math.min(scrollPosition * 1, 3900); // Limita a queda até 3900px
+
+    // Aplica a transformação para mover o <h1> para baixo
+    h1.style.transform = `translateY(${newTop}px)`;
+    
+  }
+});
 //---------------------------Carrosel de gráficos-------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('graphCarousel');
