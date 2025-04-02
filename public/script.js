@@ -94,7 +94,11 @@ function loadCards(apiUrl, containerId) {
             deputados.forEach(deputado => {
                 const card = document.createElement('div');
                 card.classList.add('card');
-                card.setAttribute('onclick', 'flipCard(this)');
+
+                //card.setAttribute('onclick', 'flipCard(thi
+                card.onmouseenter = () => card.classList.add('flipped'); 
+                card.onmouseleave = () => card.classList.remove('flipped'); 
+
 
                 const cardInner = document.createElement('div');
                 cardInner.classList.add('card-inner');
