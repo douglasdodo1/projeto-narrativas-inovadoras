@@ -9,8 +9,8 @@ body {
 }
 
 header {
-  text-align: center;
-  margin-top: 3900px;
+    text-align: center;
+    margin-top: 4000px;
 }
 
 /*-------------------------------------*/
@@ -90,6 +90,7 @@ p {
   color: white;
   margin-bottom: 10px;
 }
+
 
 #whiteSpace {
   padding-bottom: 1400px;
