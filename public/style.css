@@ -1,6 +1,6 @@
 body {
     font-family: 'Quicksand', sans-serif;
-    background: url('images/backgroundRyan.png') no-repeat top center;
+    background: url('images/backgroundRyanMaior.png') no-repeat top center;
     background-size: 100% auto;
     margin: 0;
     padding: 0;
@@ -91,7 +91,7 @@ p {
 }
 
 #whiteSpace{
-    padding-bottom: 1700px;
+    padding-bottom: 1400px;
 }
 
 /*Style dos flashcards*/
