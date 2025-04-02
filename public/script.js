@@ -58,9 +58,6 @@ window.onload = function() {
               const votos = document.createElement('p');
               votos.textContent = `Votos: ${deputado.votos}`;
 
-              const seguidores = document.createElement('p');
-              seguidores.textContent = `Seguidores: ${deputado.seguidores}`;
-
               const candidatura = document.createElement('p');
               candidatura.textContent = `Candidatura: ${deputado.candidatura}`;
 
@@ -85,6 +82,73 @@ function flipCard(card) {
     card.classList.toggle('flipped');
 }
 
+
+//--------------------------------------------------------------------------------
+// Função genérica para carregar cards
+function loadCards(apiUrl, containerId) {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(deputados => {
+            const cardsContainer = document.getElementById(containerId);
+
+            deputados.forEach(deputado => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.setAttribute('onclick', 'flipCard(this)');
+
+                const cardInner = document.createElement('div');
+                cardInner.classList.add('card-inner');
+
+                // Frente do card (imagem e informações básicas)
+                const cardFront = document.createElement('div');
+                cardFront.classList.add('card-front');
+                cardFront.innerHTML = `
+                    <img src="${deputado.foto}" alt="Foto de ${deputado.nome}">
+                    <h3>${deputado.nome}</h3>
+                    <h3>${deputado.partido}</h3>
+                `;
+
+                // Verso do card (descrição, citação e projetos)
+                const cardBack = document.createElement('div');
+                cardBack.classList.add('card-back');
+
+                const descricao = document.createElement('p');
+                descricao.textContent = `Descrição: ${deputado.descricao}`;
+                descricao.classList.add('descricao'); 
+
+                const votos = document.createElement('p');
+                votos.textContent = `Votos: ${deputado.votos}`;
+
+                const candidatura = document.createElement('p');
+                candidatura.textContent = `Candidatura: ${deputado.candidatura}`;
+
+                cardBack.appendChild(descricao);
+                cardBack.appendChild(votos);
+                cardBack.appendChild(candidatura);
+
+                // Adiciona o conteúdo da frente e do verso ao card
+                cardInner.appendChild(cardFront);
+                cardInner.appendChild(cardBack);
+                card.appendChild(cardInner);
+                cardsContainer.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Erro ao carregar dados dos deputados:', error));
+}
+
+// Função para alternar o efeito de flip no card ao ser clicado
+function flipCard(card) {
+    card.classList.toggle('flipped');
+}
+
+// Carregar cards ao carregar a página
+window.onload = function () {
+    // Exemplo de uso: Carregar cards para diferentes contêineres
+    loadCards('/api/cards', 'cards-container'); // Todos os deputados
+    loadCards('/api/cards-Cleiton-Collins', 'cleiton-collins-container'); 
+    loadCards('/api/cards-Joel-da-Harpa', 'joel-harpa-container');
+    loadCards('/api/cards-Clarissa-Tercio', 'clarissa-tercio-container');
+};
 //--------------------------Gráfico de Votos por Partido--------------------------
 
 fetch('/api/votos')
