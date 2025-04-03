@@ -156,6 +156,9 @@ window.onload = function () {
   loadCards("/api/cards-Cleiton-Collins", "cleiton-collins-container");
   loadCards("/api/cards-Joel-da-Harpa", "joel-harpa-container");
   loadCards("/api/cards-Clarissa-Tercio", "clarissa-tercio-container");
+  loadCards("/api/cards-Alberto-Feitosa", "alberto-feitosa-container");
+  loadCards("/api/cards-Jose-Ivanildo", "jose-ivanildo-container");
+  loadCards("/api/cards-Abimael-Santos", "abimael-santos-container");
 };
 //--------------------------Gráfico de Votos por Partido--------------------------
 
